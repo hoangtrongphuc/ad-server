@@ -1,7 +1,7 @@
 const { createContainer, asValue } = require("awilix");
 const mongoRepository = require('../repository/mongo.repository')
-const camapaignService = require("../service/camapaign.service");
-const camapaignModel = require('../model/camapaign')
+const campaignService = require("../service/campaign.service");
+const campaignModel = require('../model/campaign')
 module.exports = mediator => {
   mediator.on("connect.ready", ({ consts, db, msgQueue }) => {
     console.log("Init DI container!");
@@ -10,7 +10,7 @@ module.exports = mediator => {
       db: asValue(db),
       msgQueue: asValue(msgQueue),
       consts: asValue(consts),
-      model: asValue(camapaignModel),
+      model: asValue(campaignModel),
       repository: asValue(mongoRepository(db))
     });
     container.registerValue = object => {
@@ -19,7 +19,7 @@ module.exports = mediator => {
       });
     };
     container.register({
-      camapaignService: asValue(camapaignService(container))
+      campaignService: asValue(campaignService(container))
     });
     mediator.emit("di.ready", container);
   });

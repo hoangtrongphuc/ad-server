@@ -7,9 +7,9 @@ const cors = require('cors')
 const morgan = require('morgan')
 const helmet = require('helmet')
 const router = require('./api/api')
-const {auth, error} = require('./middleware')
+const {format, error} = require('./middleware')
 let ssl = null
-const port = 8083;
+const port = process.env.PORT;
 const start = container => {
   return new Promise((resolve, reject) => {
     const app = express()
@@ -23,8 +23,8 @@ const start = container => {
       req.container = container.createScope()
       next()
     })
-   // app.use(auth)
     router(container, app)
+    app.use(format)
     app.use(error)
     if (ssl) {
       const server = createServer(ssl, app).listen(port, () => resolve(server))

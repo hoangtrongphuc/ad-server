@@ -9,8 +9,11 @@ module.exports = container => {
   const CONSTS = container.resolve("consts");
   const queue = container.resolve("msgQueue");
 
-  const getAllCampaign = () => {
-    return repository.getAllCampaign()
+  const getAllCampaign = ({ filter = `{}`, projection = `{}`, sort = `{ "createdAt": -1 }`, limit, skip }) => {
+    return repository.getAllCampaign({
+      filter: JSON.parse(filter), projection: JSON.parse(projection),
+      sort: JSON.parse(sort), limit: Number(limit), skip: Number(skip)
+    })
   };
 
   const createCampaign = campaign => {

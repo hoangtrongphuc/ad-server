@@ -2,7 +2,7 @@ const express = require("express");
 
 const API = (container, app) => {
   let router = express.Router();
-  let camapaignService = container.resolve("camapaignService");
+  let campaignService = container.resolve("campaignService");
   router.route('/:id')
     .get((req, res, next) => {
       campaignService
@@ -41,7 +41,7 @@ const API = (container, app) => {
   router.route('/')
     .get((req, res, next) => {
       campaignService
-        .getAllCampaign()
+        .getAllCampaign(req.query)
         .then(campaigns => {
           res.locals = campaigns;
           return next();

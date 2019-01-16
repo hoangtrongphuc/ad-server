@@ -3,17 +3,14 @@ const consts = require("./consts");
 const di = require("./di");
 const db = require("./db");
 const rabbit = require("./rabbit");
-const drm = require("./drmToday");
 const Promise = require("bluebird");
-//const models = require('../models');
-//const { connect } = database;
 
 module.exports = mediator => {
-  return Promise.all([drm(), db["mongo"](), rabbit()])
-    .spread((drm, mongo, rabbit) => {
+  return Promise.all([db["mongo"](), rabbit()])
+    .spread((db, msgQueue) => {
       console.log("Connect.Ready!");
       di(mediator);
-      mediator.emit("connect.ready", { consts, drm, db: mongo, rabbit });
+      mediator.emit("connect.ready", { consts, db, msgQueue });
     })
     .catch(err => {
       mediator.emit("connect.fail", err);

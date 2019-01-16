@@ -1,11 +1,11 @@
 "use strict";
 const rabbit = require("amqplib");
 const rabbitSettings = {
-  host: process.env.RABBIT_HOST || "sidewinder.rmq.cloudamqp.com/enrlvtjx",
-  port: process.env.RABBIT_PORT || "",
-  user: process.env.RABBIT_USER || "enrlvtjx",
-  pass: process.env.RABBIT_PASS || "E0no58yNJ7qWIi2auGm8zTx_afj5VT6f",
-  exchange: "drm"
+  host: process.env.RABBIT_HOST,
+  port: process.env.RABBIT_PORT,
+  user: process.env.RABBIT_USER,
+  pass: process.env.RABBIT_PASS,
+  exchange: process.env.RABBIT_EXCHANGE
 };
 
 const getConnection = ({ host, port, user, pass }) =>

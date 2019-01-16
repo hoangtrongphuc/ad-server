@@ -3,6 +3,7 @@ const Promise = require('bluebird')
 const repository = db => {
   const createCampaign = campaign => {
     return new Promise((resolve, reject) => {
+      campaign.createdAt = campaign.updatedAd = Date.now();
       db.collection('campaign').insertOne(campaign, (err, doc) => {
         if (err) {
           reject(new Error('An error ocurred create campaign, err: ' + err))
@@ -25,9 +26,9 @@ const repository = db => {
     })
   }
 
-  const getAllCampaign = () => {
+  const getAllCampaign = ({ filter, projection, sort, limit = 20, skip = 0 }) => {
     return new Promise((resolve, reject) => {
-      db.collection('campaign').find({})
+      db.collection('campaign').find(filter).project(projection).sort(sort).limit(limit).skip(skip*limit)
         .toArray((err, docs) => {
           if (err) {
             reject(new Error('An error fetching campaigns, err: ' + err))
@@ -52,7 +53,8 @@ const repository = db => {
 
   const updateCampaignById = (_id, update) => {
     return new Promise((resolve, reject) => {
-      db.collection('campaign').updateOne({ _id }, {$set: update},
+      update.updatedAd = Date.now();
+      db.collection('campaign').updateOne({ _id }, { $set: update },
         (err, doc) => {
           if (err) {
             reject(new Error('An error occurred update campaign, err: ' + err))
