@@ -14,8 +14,6 @@
     ]
   },
   "scripts": {
-    "build": "docker build -t zone-dev .",
-    "run": "docker run -it -p 3000:3000 zone-dev",
     "test": "mocha -R spec src/**/*.spec.js",
     "start": "node src/index.js",
     "lint": "standard --verbose | snazzy",

@@ -1,6 +1,5 @@
 const crypto = require("crypto");
 const moment = require("moment");
-const rq = require("request-promise");
 const ObjectID = require('mongodb').ObjectID
 
 module.exports = container => {

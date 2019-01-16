@@ -10,17 +10,17 @@ console.log("----- micro service start-----------");
 
 process.on("uncaughtException", err => {
   console.error("uncaughtException: ", err);
-  process.exit(0)
+  process.exit(1)
 });
 
 process.on("uncaughtRejection", err => {
   console.error("uncaughtRejection: ", err);
-  process.exit(0)
+  process.exit(1)
 });
 
 mediator.on("connect.fail", err => {
   console.error(err);
-  process.exit(0)
+  process.exit(1)
 });
 
 mediator.on("di.ready", container => {

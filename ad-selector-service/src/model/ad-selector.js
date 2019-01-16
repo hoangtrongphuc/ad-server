@@ -9,7 +9,7 @@ const Model = () => {
     const addedBySchema = Joi.string()
     const descSchema = Joi.string()
     const linkSchema = Joi.string()
-    const statsSchema = Joi.object().keys({
+    const statsSchema = Joi.object().key({
         impressions: Joi.number(),
         clicks: Joi.number()
     })
