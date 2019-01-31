@@ -1,6 +1,8 @@
 .vscode
 
 # Logs
+data
+redis-data
 logs
 *.log
 npm-debug.log*

@@ -18,5 +18,22 @@ module.exports = {
       ec: 500,
       msg: "System error"
     }
+  },
+
+  EVENT_TYPE: {
+    IMPRESSION: 'impression',
+    CLICK: 'click',
+    START: 'start',
+    CREATIVE_VIEW: 'creativeView',
+    FIRST_QUARTILE: 'firstQuartile',
+    MIDPOINT: 'midpoint',
+    THIRD_QUATTILE: 'thirdQuartile',
+    COMPLETE: 'complete',
+    MUTE: 'mute',
+    UNMUTE: 'unmute',
+    PAUSE: 'pause',
+    REWIND: 'rewind',
+    RESUME: 'resume',
+    SKIP: 'skip'
   }
 };

@@ -6,11 +6,11 @@ const rabbit = require("./rabbit");
 const Promise = require("bluebird");
 
 module.exports = mediator => {
-  return Promise.all([db["mongo"](), rabbit()])
-    .spread((db, msgQueue) => {
+  return Promise.all([db["mongo"](), rabbit(), db["redis"]()])
+    .spread((db, msgQueue, redis) => {
       console.log("Connect.Ready!");
       di(mediator);
-      mediator.emit("connect.ready", { consts, db, msgQueue });
+      mediator.emit("connect.ready", { consts, db, msgQueue, redis });
     })
     .catch(err => {
       mediator.emit("connect.fail", err);

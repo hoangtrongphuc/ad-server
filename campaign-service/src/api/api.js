@@ -3,6 +3,36 @@ const express = require("express");
 const API = (container, app) => {
   let router = express.Router();
   let campaignService = container.resolve("campaignService");
+
+  router.route('/:id/creatives')
+    .get((req, res, next) => {
+      campaignService
+        .getCreativesByCampaignId(req.params.id)
+        .then(campaign => {
+          res.locals = campaign;
+          return next();
+        })
+        .catch(next);
+    })
+    .post((req, res, next) => {
+      campaignService
+        .linkCreativeToCampaignId(req.body.creativeId, req.params.id)
+        .then(campaign => {
+          res.locals = campaign;
+          return next();
+        })
+        .catch(next);
+    })
+    .delete((req, res, next) => {
+      campaignService
+        .unlinkCreativeFromCampaignId(req.body.creativeId, req.params.id)
+        .then(campaign => {
+          res.locals = campaign;
+          return next();
+        })
+        .catch(next);
+    })
+
   router.route('/:id')
     .get((req, res, next) => {
       campaignService
@@ -11,9 +41,7 @@ const API = (container, app) => {
           res.locals = campaign;
           return next();
         })
-        .catch(err => {
-          return next(err);
-        });
+        .catch(next);
     })
     .put((req, res, next) => {
       campaignService
@@ -22,9 +50,7 @@ const API = (container, app) => {
           res.locals = campaign;
           return next();
         })
-        .catch(err => {
-          return next(err);
-        });
+        .catch(next);
     })
     .delete((req, res, next) => {
       campaignService
@@ -33,9 +59,7 @@ const API = (container, app) => {
           res.locals = campaign;
           return next();
         })
-        .catch(err => {
-          return next(err);
-        });
+        .catch(next);
     });
 
   router.route('/')
@@ -46,9 +70,7 @@ const API = (container, app) => {
           res.locals = campaigns;
           return next();
         })
-        .catch(err => {
-          return next(err);
-        });
+        .catch(next);
     })
     .post((req, res, next) => {
       campaignService
@@ -57,13 +79,11 @@ const API = (container, app) => {
           res.locals = newCampaign;
           return next();
         })
-        .catch(err => {
-          return next(err);
-        });
+        .catch(next);
     })
 
 
-  app.use("/campaign", router);
+  app.use("/campaigns", router);
 };
 
 module.exports = API;

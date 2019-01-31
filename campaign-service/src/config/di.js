@@ -1,7 +1,8 @@
 const { createContainer, asValue } = require("awilix");
 const mongoRepository = require('../repository/mongo.repository')
 const campaignService = require("../service/campaign.service");
-const campaignModel = require('../model/campaign')
+const campaignModel = require('../model/schema')
+
 module.exports = mediator => {
   mediator.on("connect.ready", ({ consts, db, msgQueue }) => {
     console.log("Init DI container!");
