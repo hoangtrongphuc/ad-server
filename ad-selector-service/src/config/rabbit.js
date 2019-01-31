@@ -12,19 +12,20 @@ const getConnection = ({ host, port, user, pass }) =>
   (user ? "amqp://" + user + ":" + pass + "@" : "amqp://") +
   (port ? [host, port].join(":") : host);
 
-const createChannel = ({ connection, ch }) => {
+const createChannel = ({ connection, channel }) => {
   console.log("Connect RabbitMQ successful!");
   const close = () => {
     connection.close();
-    ch.close();
+    channel.close();
   };
 
   const log = (data, exchange = rabbitSettings.exchange) => {
     return new Promise((resolve, reject) => {
       try {
-        ch.publish(exchange, "", Buffer.from(JSON.stringify(data)));
+        channel.publish(exchange, "", Buffer.from(JSON.stringify(data)));
         resolve({ ec: 0 });
       } catch (err) {
+        console.log(err)
         reject(new Error("An error publish to channel exchange"));
       }
     });

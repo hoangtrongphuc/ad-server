@@ -3,6 +3,36 @@ const express = require("express");
 const API = (container, app) => {
   let router = express.Router();
   let zoneService = container.resolve("zoneService");
+
+  router.route('/:id/campaigns')
+    .get((req, res, next) => {
+      zoneService
+        .getCampaignsByZoneId(req.params.id)
+        .then(zone => {
+          res.locals = zone;
+          return next();
+        })
+        .catch(next);
+    })
+    .post((req, res, next) => {
+      zoneService
+        .linkCampaignToZoneId(req.body.campaignId, req.params.id)
+        .then(zone => {
+          res.locals = zone;
+          return next();
+        })
+        .catch(next);
+    })
+    .delete((req, res, next) => {
+      zoneService
+        .unlinkCampaignFromZoneId(req.body.campaignId, req.params.id)
+        .then(zone => {
+          res.locals = zone;
+          return next();
+        })
+        .catch(next);
+    })
+
   router.route('/:id')
     .get((req, res, next) => {
       zoneService
@@ -11,9 +41,7 @@ const API = (container, app) => {
           res.locals = zone;
           return next();
         })
-        .catch(err => {
-          return next(err);
-        });
+        .catch(next);
     })
     .put((req, res, next) => {
       zoneService
@@ -22,9 +50,7 @@ const API = (container, app) => {
           res.locals = zone;
           return next();
         })
-        .catch(err => {
-          return next(err);
-        });
+        .catch(next);
     })
     .delete((req, res, next) => {
       zoneService
@@ -33,9 +59,7 @@ const API = (container, app) => {
           res.locals = zone;
           return next();
         })
-        .catch(err => {
-          return next(err);
-        });
+        .catch(next);
     });
 
   router.route('/')
@@ -46,9 +70,7 @@ const API = (container, app) => {
           res.locals = zones;
           return next();
         })
-        .catch(err => {
-          return next(err);
-        });
+        .catch(next);
     })
     .post((req, res, next) => {
       zoneService
@@ -57,13 +79,11 @@ const API = (container, app) => {
           res.locals = newZone;
           return next();
         })
-        .catch(err => {
-          return next(err);
-        });
+        .catch(next);
     })
 
 
-  app.use("/zone", router);
+  app.use("/zones", router);
 };
 
 module.exports = API;

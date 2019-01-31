@@ -29,6 +29,9 @@
     "supertest": "^2.0.1"
   },
   "dependencies": {
+    "ua-parser-js": "0.7.19",
+    "lodash": "4.17.11",
+    "redis": "2.8.0",
     "amqplib": "^0.5.2",
     "awilix": "^4.0.0",
     "bluebird": "^3.5.2",
